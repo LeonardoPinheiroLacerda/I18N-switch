@@ -1,18 +1,28 @@
+:root{
+    --sl-width:40px;
+    --sl-height: 26px;
+
+    --sl-border-radius: calc(var(--sl-height) / 2);
+    --sl-flag-size:calc(var(--sl-height) - 6px);
+    --sl-transformX: calc(var(--sl-width) - var(--sl-flag-size) - 6px);
+}
+
 .switch-container,
 .switch {
-    border-radius: 20px;
+    border-radius: var(--sl-border-radius);
 }
 
 .switch-container {
-    height: 24px;
-    width: 40px;
+    height: var(--sl-height);
+    width: var(--sl-width);
     border: 1px solid gray;
     position: relative;
+    box-sizing: border-box;
 }
 
 .switch {
-    height: 20px;
-    width: 20px;
+    height: var(--sl-flag-size);
+    width: var(--sl-flag-size);
     position: absolute;
     top: 2px;
     left: 2px;
@@ -25,20 +35,12 @@
     left: auto;
 }
 
-.switch.portuguese {
-    background-image: url("../assets/portuguese.png");
-}
-
-.switch.english {
-    background-image: url("../assets/english.png");
-}
-
 @keyframes slidein {
     from {
         transform: translateX(0%);
     }
 
     to {
-        transform: translateX(15px);
+        transform: translateX(var(--sl-transformX));
     }
 }

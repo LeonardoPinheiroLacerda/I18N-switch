@@ -1,33 +1,25 @@
 class LangSwitch {
     
-    constructor() {
+    constructor(opts) {
         this.on = false;
         this.onChange = () => {};
-        this.onPortugueseOn = () => {};
-        this.onEnglishOn = () => {};
-    }
-
-    isPortugueseOn = () => {
-        return this.on == true;
-    }
-
-    isEnglishOn = () => {
-        return this.on == false;
+        this.opts = opts;        
     }
 
     onChange = (func) => {
         this.onChange = func;
     }
 
-    onPortugueseOn = (func) => {
-        this.onPortugueseOn = func;
+    isFirstLanguageOn = () => {
+        return this.on != true;
     }
 
-    onEnglishOn = (func) => {
-        this.onEnglishOn = func;
+    isSecondLanguageOn = () => {
+        return this.on == true;
     }
 
     initLangSwitch = () => {
+
         const containers = document.getElementsByClassName("switch-container");
     
         const playAnimation = (trigger) => {
@@ -38,47 +30,59 @@ class LangSwitch {
             trigger.style.animation = "slidein .2s ease-out reverse";
         };
     
-        const turnPortuguese = (trigger) => {
-            trigger.classList.remove("english");
-            trigger.classList.add("portuguese");
-            this.on = true;
+        const loadI18N = (i18nVariable) => {
+            const keys = Object.keys(i18nVariable);
+
+            for(var i in keys){
+
+                const key = keys[i];
+                const value = i18nVariable[key];
+
+                const node = document.querySelector('#' + key);
+
+                if(node != null){
+                    node.innerHTML = value;
+                }
+                
+            }
+        }
+
+        const turnFirstLanguage = (trigger) => {
+            trigger.style.backgroundImage = `url('${this.opts.firstFlag}')`;
+            this.on = false;
+            loadI18N(this.opts.firstI18n);
         };
     
-        const turnEnglish = (trigger) => {
-            trigger.classList.remove("portuguese");
-            trigger.classList.add("english");
-            this.on = false;
+        const turnSecondLanguage = (trigger) => {
+            trigger.style.backgroundImage = `url('${this.opts.secondFlag}')`;
+            this.on = true;
+            loadI18N(this.opts.secondI18n);
         };
     
         for (let i = 0; i < containers.length; i++) {
     
             const trigger = containers[i].firstChild.nextSibling;
-            turnEnglish(trigger);
+            turnFirstLanguage(trigger);
             
             containers[i].addEventListener("click", () => {
                 
                 if (trigger.style.animation == "") {
+
                     if (trigger.classList.contains("on")) {
                         playReverseAnimation(trigger);
-                        turnEnglish(trigger);
-                        trigger.classList.toggle("on");
-
-                        this.onEnglishOn();
+                        turnFirstLanguage(trigger);
+                        trigger.classList.remove("on");
 
                     } else {
                         playAnimation(trigger);
-                        turnPortuguese(trigger);
+                        turnSecondLanguage(trigger);
                     }
     
                     setTimeout(() => {
                         trigger.style.animation = "";
-    
-                        if (!trigger.classList.contains("english")) {
-                            trigger.classList.toggle('on');
-
-                            this.onPortugueseOn();
+                        if (this.on) {
+                            trigger.classList.add('on');
                         }
-
                         this.onChange();
                     }, 185);
                 }
