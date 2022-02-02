@@ -1,0 +1,44 @@
+.switch-container,
+.switch {
+    border-radius: 20px;
+}
+
+.switch-container {
+    height: 24px;
+    width: 40px;
+    border: 1px solid gray;
+    position: relative;
+}
+
+.switch {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: 0.2s;
+    background-size: cover;
+}
+
+.switch.on {
+    right: 2px;
+    left: auto;
+}
+
+.switch.portuguese {
+    background-image: url("../assets/portuguese.png");
+}
+
+.switch.english {
+    background-image: url("../assets/english.png");
+}
+
+@keyframes slidein {
+    from {
+        transform: translateX(0%);
+    }
+
+    to {
+        transform: translateX(15px);
+    }
+}
