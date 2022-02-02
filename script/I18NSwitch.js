@@ -1,4 +1,4 @@
-class LangSwitch {
+class I18NSwitch {
     
     constructor(opts) {
         this.on = false;
@@ -18,7 +18,7 @@ class LangSwitch {
         return this.on == true;
     }
 
-    initLangSwitch = () => {
+    initI18NSwitch = () => {
 
         const containers = document.getElementsByClassName("switch-container");
     
@@ -84,7 +84,7 @@ class LangSwitch {
                             trigger.classList.add('on');
                         }
                         this.onChange();
-                    }, 185);
+                    }, 135);
                 }
             });
         }
