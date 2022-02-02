@@ -1,6 +1,7 @@
 :root{
     --sl-width:40px;
     --sl-height: 26px;
+    --sl-border-color: gray;
 
     --sl-border-radius: calc(var(--sl-height) / 2);
     --sl-flag-size:calc(var(--sl-height) - 6px);
@@ -15,7 +16,7 @@
 .switch-container {
     height: var(--sl-height);
     width: var(--sl-width);
-    border: 1px solid gray;
+    border: 1px solid var(--sl-border-color);
     position: relative;
     box-sizing: border-box;
 }
