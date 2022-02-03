@@ -19,6 +19,7 @@
     border: 1px solid var(--sl-border-color);
     position: relative;
     box-sizing: border-box;
+    cursor:pointer;
 }
 
 .switch {
