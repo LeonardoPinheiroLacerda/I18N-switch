@@ -1,9 +1,9 @@
 class I18NSwitch {
     
-    constructor(opts) {
+    constructor(args) {
         this.on = false;
         this.onChange = () => {};
-        this.opts = opts;        
+        this.args = args;        
     }
 
     onChange = (func) => {
@@ -18,7 +18,7 @@ class I18NSwitch {
         return this.on == true;
     }
 
-    initI18NSwitch = () => {
+    init = () => {
 
         const containers = document.getElementsByClassName("switch-container");
     
@@ -30,7 +30,7 @@ class I18NSwitch {
             trigger.style.animation = "slidein .2s ease-out reverse";
         };
     
-        const loadI18N = (i18nVariable) => {
+        const loadI18nWords = (i18nVariable) => {
             const keys = Object.keys(i18nVariable);
 
             for(var i in keys){
@@ -48,15 +48,15 @@ class I18NSwitch {
         }
 
         const turnFirstLanguage = (trigger) => {
-            trigger.style.backgroundImage = `url('${this.opts.firstFlag}')`;
+            trigger.style.backgroundImage = `url('${this.args.firstFlag}')`;
             this.on = false;
-            loadI18N(this.opts.firstI18n);
+            loadI18nWords(this.args.firstI18n);
         };
     
         const turnSecondLanguage = (trigger) => {
-            trigger.style.backgroundImage = `url('${this.opts.secondFlag}')`;
+            trigger.style.backgroundImage = `url('${this.args.secondFlag}')`;
             this.on = true;
-            loadI18N(this.opts.secondI18n);
+            loadI18nWords(this.args.secondI18n);
         };
     
         for (let i = 0; i < containers.length; i++) {
