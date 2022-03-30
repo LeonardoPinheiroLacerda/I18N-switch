@@ -1,53 +1,101 @@
 # I18NSwitch
 
-I18NSwitch is a vanilla JavaScript based component to make internationalization using two languages easier on web pages. <br> Just need to import the javascript and css file on your project and you are ready to go!
+I18NSwitch is a vanilla JavaScript based component to make internationalization using two languages easier on web pages.
 
 This component will automatically change between two languages everytime user clicks on the switch.
 
-<br>
+Everytime the switch changes, it'll look for the elements on your page that has the **data-i18n** attribute, and change its text by the one you configured on the object constructor.
 
 ## Constructor
 
-~~~javascript
+``new I18NSwitch(id, main, secondary, general)``
+
+### Construct and initialize your switch using the following Argument:
+
+``id`` - Div's id in which the switch will be built.
+
+``main and secundary`` - Objects that contains the flag and the content that will override your page content with the following structure: 
+~~~js
+{
+    flag: "An image url",
+    language: {
+        key: value,
+        key: value,
+        key: value
+    }
+}
+~~~
+
+The **key** values on the language object it is the value the component will look for as value for the data-i18n attribute in all page elements, and the **value** it is the content that will override the previous one.
+
+``general`` - (Optional argument) Object that contains the content that will override your page content if is no defined by the main or the secondary languages. 
+
+**Example:**
+
+~~~js
 const langSwitch = new I18NSwitch(
     {
-        firstFlag : 'assets/united-states.png',
-        firstI18n : english,
-        secondFlag : 'assets/brazil.png',
-        secondI18n : portuguese
+        const langSwitch = new I18NSwitch(
+            "container-id",
+            {
+                flag: "/assets/example1.png",
+                language: {
+                    "hello": "Olá!"
+                }
+            },
+            {
+                flag: "/assets/example2.png",
+                language: {
+                    "hello": "Hello!"
+                }
+            },
+            {
+                "bye": "Sayonara";
+            }
+        );
     }
 );
 ~~~
 
-### firstFlag
-Path of the flag image that will represent the first language.
+## CountryFlags
 
-### firstI18n
-Object that contains all texts that will be assign to each element on the first language, the properties name must be the same of the correspontent element ID you wish to assign the value.
+An enum of country flags, this is all available indexes: 
 
-### secondFlag
-Path of the flag image that will represent the second language.
+- BRAZIL
+- CHINA
+- FRANCE
+- GERMANY
+- INDIA
+- ITALY
+- JAPAN
+- PORTUGAL
+- RUSSIA
+- SPAIN
+- UNITED_KINGDOM
+- UNITED_STATES
 
-### secondI18n
-Object that contains all texts that will be assign to each element on the second language, the properties name must be the same of the correspontent element ID you wish to assign the value.
+Example of use: 
 
-<br>
+~~~js
+const brazilFlag = CountryFlags.BRAZIL;
+~~~
 
 ## Functions
 
-### init
-Initializes the component.
 
-### isFirstLanguageOn
-Returns true if first language is selected
+### isMainLanguageOn
+Returns true if the main language is selected.
 
-### isSecondLanguageOn
-Returns true if second language is selected
+### isSecondaryLanguageOn
+Returns true if the secondary language is selected.
 
-## Listener
+### change
+Changes the language without clicking on the switch.
+
+## Listeners
 
 ### onChange
-Triggers every change between languages
+Triggers every change between languages.
 
 <br>
 
@@ -56,77 +104,55 @@ Triggers every change between languages
 ~~~html
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>I18N switch</title>
+    <head>
+        <title>I18N Switch</title>
+        <link rel="stylesheet" href="style/I18NSwitch.css">
+    </head>
+    <body>
+        <!-- The container where the switch will be built -->
+        <div id="i18n-switch"></div>
 
-    <link rel="stylesheet" href="style/langSwitch.css">
+        <!-- A mapped field, that will receve content from the switch -->
+        <p data-i18n="hello"></p>
 
-    <style>
-        body{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: 100vh
-        }
-    </style>
 
-</head>
-<body>
+        <script src="script/I18NSwitch.js"></script>
+        <script>
 
-    <!--
-    This div element is where the switch will be built
-    -->
-    <div class="switch-container">
-        <div class="switch"></div>
-    </div>
+            //Variables that contains the content that will be used to configure the component
+            const english = {};
+            const portuguese = {
+                "hello": "Olá mundo!"
+            };
+            const general = {
+                "hello": "Hello world!"
+            };
 
-    <!--
-    This element will recieve text from the component
-    -->
-    <p id="helloworld"></p>
+            //The content constructor.
+            const langSwitch = new I18NSwitch(
+                "i18n-switch",
+                {
+                    flag: CountryFlags.UNITED_STATES,
+                    language: english
+                },
+                {
+                    flag: CountryFlags.BRAZIL,
+                    language: portuguese
+                },
+                general
+            );
 
-    <script src="script/I18NSwitch.js"></script>
-    <script>
-        
-        const english = {
-            helloworld : "Hello world!"
-        }
+            //Some demonstration on how to use some functions
+            langSwitch.onChange(() => {
+                if(langSwitch.isMainLanguageOn()){
+                    console.log("main");
+                }else if(langSwitch.isSecondaryLanguageOn()){
+                    console.log("secondary");
+                }
+            });
 
-        const portuguese = {
-            helloworld : "Olá mundo!"
-        }
-
-        /*
-        Note that english and portuguese objects have a helloworld attribute, 
-        that will be assign to the p element that has the helloworld ID everytime
-        the switch changes or when it's initialized.
-        */
-        const langSwitch = new I18NSwitch(
-            {
-                firstFlag : 'assets/united-states.png',
-                firstI18n : english,
-                secondFlag : 'assets/brazil.png',
-                secondI18n : portuguese
-            }
-        );
-
-        langSwitch.onChange = () => {
-            if(langSwitch.isFirstLanguageOn()){
-                console.log("Page turned to english.");
-            }else if(langSwitch.isSecondLanguageOn()){
-                console.log("Page turned to portuguese.");
-            }
-        }
-
-        /*
-        After instantiate I18NSwitch object you need to run the init method do initialize the component.
-        */
-        langSwitch.init();
-
-    </script>
-</body>
+        </script>
+    </body>
 </html>
 ~~~
 
