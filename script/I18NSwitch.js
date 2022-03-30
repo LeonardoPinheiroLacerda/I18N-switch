@@ -1,20 +1,42 @@
+class CountryFlags {
+    static BRAZIL         = "assets/brazil.png";
+    static CHINA          = "assets/china.png";
+    static FRANCE         = "assets/france.png";
+    static GERMANY        = "assets/germany.png";
+    static INDIA          = "assets/india.png";
+    static ITALY          = "assets/italy.png";
+    static JAPAN          = "assets/japan.png";
+    static PORTUGAL       = "assets/portugal.png";
+    static RUSSIA         = "assets/russia.png";
+    static SPAIN          = "assets/spain.png";
+    static UNITED_KINGDOM = "assets/united-kingdom.png";
+    static UNITED_STATES  = "assets/united-states.png";
+}
+
 class I18NSwitch {
-    
-    constructor(args) {
+
+    constructor (main, secondary, general = {}) {
         this.on = false;
-        this.onChange = () => {};
-        this.args = args;        
+        
+        this.main = main;
+        this.secondary = secondary;
+        this.general = general;
+
+        this.change = () => {};
+
+        new Image(main.flag);
+        new Image(secondary.flag);
     }
 
     onChange = (func) => {
-        this.onChange = func;
+        this.change = func;
     }
 
-    isFirstLanguageOn = () => {
+    isMainLanguageOn = () => {
         return this.on != true;
     }
 
-    isSecondLanguageOn = () => {
+    isSecondaryLanguageOn = () => {
         return this.on == true;
     }
 
@@ -22,71 +44,96 @@ class I18NSwitch {
 
         const containers = document.getElementsByClassName("switch-container");
     
-        const playAnimation = (trigger) => {
-            trigger.style.animation = "slidein .2s ease-out";
+        const playAnimation = (container) => {
+            getTrigger(container).style.animation = "slidein .2s ease-out";
         };
     
-        const playReverseAnimation = (trigger) => {
-            trigger.style.animation = "slidein .2s ease-out reverse";
+        const playReverseAnimation = (container) => {
+            getTrigger(container).style.animation = "slidein .2s ease-out reverse";
         };
-    
-        const loadI18nWords = (i18nVariable) => {
-            const keys = Object.keys(i18nVariable);
 
-            for(var i in keys){
-
-                const key = keys[i];
-                const value = i18nVariable[key];
-
-                const node = document.querySelector('#' + key);
-
-                if(node != null){
-                    node.innerHTML = value;
-                }
-                
-            }
+        const getTrigger = (container) => {
+            return container.firstChild.nextSibling;
         }
 
-        const turnFirstLanguage = (trigger) => {
-            trigger.style.backgroundImage = `url('${this.args.firstFlag}')`;
+        const turnMainLanguage = (container) => {
+            getTrigger(container).style.backgroundImage = `url('${this.main.flag}')`;
             this.on = false;
-            loadI18nWords(this.args.firstI18n);
+            loadI18nWords();
         };
     
-        const turnSecondLanguage = (trigger) => {
-            trigger.style.backgroundImage = `url('${this.args.secondFlag}')`;
+        const turnSecondaryLanguage = (container) => {
+            getTrigger(container).style.backgroundImage = `url('${this.secondary.flag}')`;
             this.on = true;
-            loadI18nWords(this.args.secondI18n);
+            loadI18nWords();
         };
-    
-        for (let i = 0; i < containers.length; i++) {
-    
-            const trigger = containers[i].firstChild.nextSibling;
-            turnFirstLanguage(trigger);
+
+        const loadI18nWords = () => {
             
-            containers[i].addEventListener("click", () => {
-                
-                if (trigger.style.animation == "") {
+            loadI18nVariable(this.general);
 
-                    if (trigger.classList.contains("on")) {
-                        playReverseAnimation(trigger);
-                        turnFirstLanguage(trigger);
-                        trigger.classList.remove("on");
+            if(this.isMainLanguageOn()){
+                loadI18nVariable(this.main.language);
+            }else{
+                loadI18nVariable(this.secondary.language);
+            }
 
-                    } else {
-                        playAnimation(trigger);
-                        turnSecondLanguage(trigger);
-                    }
-    
-                    setTimeout(() => {
-                        trigger.style.animation = "";
-                        if (this.on) {
-                            trigger.classList.add('on');
-                        }
-                        this.onChange();
-                    }, 135);
-                }
-            });
         }
+
+        const loadI18nVariable = (language) => {
+
+            const keys = Object.keys(language);
+
+            for(let i = 0; i < keys.length; i ++){
+                
+                const key = keys[i];
+                const value = language[key];
+
+                const elements = document.querySelectorAll(`[data-i18n="${key}"]`);
+
+                for(let j = 0; j < elements.length; j ++){
+                    const element = elements[j];
+
+                    element.innerHTML = value;
+                }
+
+            }
+
+        }
+
+        for(let i = 0; i < containers.length; i ++){
+            const container = containers[i];
+
+            turnMainLanguage(container);
+            container.addEventListener('click', (evt) => {
+
+                this.on = !this.on;
+
+                if(this.isMainLanguageOn()) {
+
+                    turnMainLanguage(container);
+                    getTrigger(container).classList.remove("on");
+                    playReverseAnimation(container);
+
+                }else {
+
+                    turnSecondaryLanguage(container);
+                    playAnimation(container);                  
+
+                }
+
+                setTimeout(() => {
+                    getTrigger(container).style.animation = "";
+                    if (this.on) {
+                        getTrigger(container).classList.add('on');
+                    }
+                    this.onChange();
+                }, 135);
+
+            });
+
+        }
+
     }
+
 }
