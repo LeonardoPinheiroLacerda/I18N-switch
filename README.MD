@@ -6,6 +6,28 @@ This component will automatically change between two languages everytime user cl
 
 Everytime the switch changes, it'll look for the elements on your page that has the **data-i18n** attribute, and change its text by the one you configured on the object constructor.
 
+## Instalation
+
+You can easily import the component into your page on the following ways.
+
+### CDN
+
+Copy-paste the stylesheet into your head tag after all other stylesheets.
+~~~html
+<link href="https://unpkg.com/i18n-switch@2.0.1/style/I18NSwitch.css" rel="stylesheet"/>
+~~~
+
+Copy-paste the script into the end of your body tag.
+~~~html
+<script src="https://unpkg.com/i18n-switch@2.0.1/script/I18NSwitch.js"></script>
+~~~
+
+### NPM
+
+~~~
+npm i i18n-switch
+~~~
+
 ## Constructor
 
 ``new I18NSwitch(id, main, secondary, general)``
@@ -99,14 +121,14 @@ Triggers every change between languages.
 
 <br>
 
-## Example
+## Example on static web pages
 
 ~~~html
 <!DOCTYPE html>
 <html>
     <head>
         <title>I18N Switch</title>
-        <link rel="stylesheet" href="style/I18NSwitch.css">
+        <link rel="stylesheet" href="https://unpkg.com/i18n-switch@2.0.1/style/I18NSwitch.css">
     </head>
     <body>
         <!-- The container where the switch will be built -->
@@ -116,7 +138,7 @@ Triggers every change between languages.
         <p data-i18n="hello"></p>
 
 
-        <script src="script/I18NSwitch.js"></script>
+        <script src="https://unpkg.com/i18n-switch@2.0.1/script/I18NSwitch.js"></script>
         <script>
 
             //Variables that contains the content that will be used to configure the component
@@ -165,4 +187,3 @@ And this is how it will looks like:
 ## Mentions
 The flag images used on the project and others can be found for free on the following link:
 https://www.flaticon.com/packs/country-flags-icons
-

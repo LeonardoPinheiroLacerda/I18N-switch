@@ -1,16 +1,16 @@
 class CountryFlags {
-    static BRAZIL         = "/assets/brazil.png";
-    static CHINA          = "/assets/china.png";
-    static FRANCE         = "/assets/france.png";
-    static GERMANY        = "/assets/germany.png";
-    static INDIA          = "/assets/india.png";
-    static ITALY          = "/assets/italy.png";
-    static JAPAN          = "/assets/japan.png";
-    static PORTUGAL       = "/assets/portugal.png";
-    static RUSSIA         = "/assets/russia.png";
-    static SPAIN          = "/assets/spain.png";
-    static UNITED_KINGDOM = "/assets/united-kingdom.png";
-    static UNITED_STATES  = "/assets/united-states.png";
+    static BRAZIL         = "https://unpkg.com/i18n-switch@2.0.0/assets/brazil.png";
+    static CHINA          = "https://unpkg.com/i18n-switch@2.0.1/assets/china.png";
+    static FRANCE         = "https://unpkg.com/i18n-switch@2.0.1/assets/france.png";
+    static GERMANY        = "https://unpkg.com/i18n-switch@2.0.1/assets/germany.png";
+    static INDIA          = "https://unpkg.com/i18n-switch@2.0.1/assets/india.png";
+    static ITALY          = "https://unpkg.com/i18n-switch@2.0.1/assets/italy.png";
+    static JAPAN          = "https://unpkg.com/i18n-switch@2.0.1/assets/japan.png";
+    static PORTUGAL       = "https://unpkg.com/i18n-switch@2.0.1/assets/portugal.png";
+    static RUSSIA         = "https://unpkg.com/i18n-switch@2.0.1/assets/russia.png";
+    static SPAIN          = "https://unpkg.com/i18n-switch@2.0.1/assets/spain.png";
+    static UNITED_KINGDOM = "https://unpkg.com/i18n-switch@2.0.1/assets/united-kingdom.png";
+    static UNITED_STATES  = "https://unpkg.com/i18n-switch@2.0.0/assets/united-states.png";
 }
 
 class I18NSwitch {
