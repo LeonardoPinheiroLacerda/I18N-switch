@@ -55,28 +55,26 @@ The **key** values on the language object it is the value the component will loo
 **Example:**
 
 ~~~js
+
 const langSwitch = new I18NSwitch(
+    "container-id",
     {
-        const langSwitch = new I18NSwitch(
-            "container-id",
-            {
-                flag: "/assets/example1.png",
-                language: {
-                    "hello": "Olá!"
-                }
-            },
-            {
-                flag: "/assets/example2.png",
-                language: {
-                    "hello": "Hello!"
-                }
-            },
-            {
-                "bye": "Sayonara";
-            }
-        );
+        flag: "/assets/example1.png",
+        language: {
+            "hello": "Olá!"
+        }
+    },
+    {
+        flag: "/assets/example2.png",
+        language: {
+            "hello": "Hello!"
+        }
+    },
+    {
+        "bye": "Sayonara";
     }
 );
+
 ~~~
 
 ## CountryFlags
