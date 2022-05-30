@@ -1,6 +1,6 @@
 {
   "name": "i18n-switch",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "I18NSwitch is a vanilla JavaScript based component to make internationalization using two languages easier on web pages.",
   "repository": {
     "type": "git",
